@@ -16,6 +16,9 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_KEY: ${{ secrets.KEY }}
+          FOO: "BAR"
+          BAR: "FOO"
+          SHA: ${{ github.sha }}
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
@@ -26,4 +29,7 @@ jobs:
             cd /opt/test.actions
             ls -la
             echo "key: $GITHUB_KEY"
+            echo "I am $FOO"
+            echo "I am $BAR"
+            echo "sha: $SHA" 
             
