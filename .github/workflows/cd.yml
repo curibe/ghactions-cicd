@@ -19,7 +19,7 @@ jobs:
           FOO: "BAR"
           BAR: "FOO"
           SHA: ${{ github.sha }}
-          CNT: ${{ github }}
+          CNT: ${{ github.repository }}
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
