@@ -26,6 +26,7 @@ jobs:
           script_stop: true
           envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
           script: |
+            eval $(ssh-agent -s)
             echo "${GITHUB_KEY}" | ssh-add -
             cd /opt/test.actions
             ls -la
