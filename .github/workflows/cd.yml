@@ -26,10 +26,9 @@ jobs:
           script_stop: true
           envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
           script: |
-            ssh-add <<< "$GITHUB_KEY"
+            echo "${GITHUB_KEY}" | ssh-add -
             cd /opt/test.actions
             ls -la
-            echo "key: $GITHUB_KEY"
             echo "I am $FOO"
             echo "I am $BAR"
             echo "sha: $SHA" 
