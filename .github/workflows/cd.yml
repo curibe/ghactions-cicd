@@ -19,12 +19,14 @@ jobs:
           FOO: "BAR"
           BAR: "FOO"
           SHA: ${{ github.sha }}
+          CNT: ${{ github }}
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script_stop: true
+          envs: FOO,BAR,SHA,CNT
           script: |
             cd /opt/test.actions
             ls -la
@@ -32,4 +34,5 @@ jobs:
             echo "I am $FOO"
             echo "I am $BAR"
             echo "sha: $SHA" 
+            echo "context: $CNT" 
             
