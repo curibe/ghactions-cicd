@@ -26,7 +26,6 @@ jobs:
 
             cd /opt/test.actions
             ls -la
-            ssh-add -L
             ssh -vT git@github.com
             printenv
             
