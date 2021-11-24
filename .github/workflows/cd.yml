@@ -15,10 +15,10 @@ jobs:
       - name: deploy
         uses: appleboy/ssh-action@master
         with:
-          host: "{{ secrets.HOST }}"
-          port: "{{ secrets.PORT }}"
-          username: "{{ secrets.USERNAME }}"
-          key: "{{ secrets.KEY }}"
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           script: |
             cd /opt/test.actions
             git pull
