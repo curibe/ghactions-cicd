@@ -23,8 +23,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script_stop: true
           script: |
-
             cd /opt/test.actions
             ls -la
-            printenv
+            echo "key: $GITHUB_KEY"
             
