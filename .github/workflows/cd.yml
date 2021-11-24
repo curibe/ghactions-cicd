@@ -16,18 +16,18 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           GITHUB_KEY: ${{ secrets.KEY }}
-          FOO: "BAR"
-          BAR: "FOO"
-          SHA: ${{ github.sha }}
           CNT: ${{ github.repository }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script_stop: true
-          envs: GITHUB_KEY,FOO,BAR,SHA,CNT
+          envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
           script: |
+            ssh-agent -a "$SSH_AUTH_SOCK" > /dev/null
+            ssh-agent - <<< "$GITHUB_KEY"
             cd /opt/test.actions
             ls -la
             echo "key: $GITHUB_KEY"
