@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script_stop: true
-          envs: FOO,BAR,SHA,CNT
+          envs: GITHUB_KEY,FOO,BAR,SHA,CNT
           script: |
             cd /opt/test.actions
             ls -la
