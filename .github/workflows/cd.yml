@@ -14,11 +14,19 @@ jobs:
       - uses: actions/checkout@v2
       - name: deploy
         uses: appleboy/ssh-action@master
+        env:
+          GITHUB_KEY: ${{ secrets.KEY }}
         with:
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
+          script_stop: true
           script: |
+
             cd /opt/test.actions
-            git pull
+            ls -la
+            ssh-add -L
+            ssh -vT git@github.com
+            printenv
+            
