@@ -30,8 +30,6 @@ jobs:
             echo "${GITHUB_KEY}" | ssh-add -
             cd /opt/test.actions
             ls -la
-            echo "I am $FOO"
-            echo "I am $BAR"
-            echo "sha: $SHA" 
             echo "context: $CNT" 
+            git pull
             
