@@ -1,0 +1,16 @@
+name: Testing ci with gitgub actions
+
+on: 
+  push:
+    branches:
+      - master
+      - dev 
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Show info
+        run: echo "Hello World"

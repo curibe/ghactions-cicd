@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  webapp:
+    image: 'nginx'
+    build: ./nginx/
+    ports:
+      - '80:80'
+    volumes:
+      - './nginx/test.conf:/etc/nginx/conf.d/test.conf'
+    depends_on:
+      - flaskapp
+  
+  flaskapp:
+    image: test_webapp
+    build: '.'
+    ports:
+      - '5000:5000'
