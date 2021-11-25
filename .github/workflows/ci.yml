@@ -39,7 +39,7 @@ jobs:
           cat ghkey
           rm ~/.ssh/known_hosts
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-          ssh -A -i ./ghkey ubuntu@3.21.156.236 'ls -la'
+          ssh -i ./ghkey ubuntu@3.21.156.236 'ls -la'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
