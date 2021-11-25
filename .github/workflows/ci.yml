@@ -39,7 +39,7 @@ jobs:
           ssh-add -l
           echo "2. "
           pwd
-          echo "${secrets.KEY}} > ghkey"
+          echo "${{secrets.KEY}} > ghkey"
           chmod 400 ghkey
           ssh -A -i ghkey -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
   
