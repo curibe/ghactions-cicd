@@ -33,7 +33,6 @@ jobs:
             Port $SSH_PORT
             ForwardAgent yes
           EOF
-          ssh-keyscan -H staging >> ~/.ssh/known_hosts
         env:
           SSH_KEY: ${{ secrets.KEY }}
           SSH_USER: ${{ secrets.USERNAME }}
@@ -44,6 +43,11 @@ jobs:
       #   with:
       #     ssh-private-key: ${{ secrets.KEY }} 
 
+      - name: Add know hosts
+        run: |
+          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          
       - name: Pulling updates from repo
         env: 
           REPO: /opt/test.actions
