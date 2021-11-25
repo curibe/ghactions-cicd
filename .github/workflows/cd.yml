@@ -29,6 +29,6 @@ jobs:
           envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
           script: |
             export GITHUB_KEY="${GITHUB_KEY}"
-            pwd
+            cd /opt/test.actions
             ./deploy.sh
             
