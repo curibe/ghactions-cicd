@@ -50,6 +50,7 @@ jobs:
           envs: GITHUB_KEY,SSH_AUTH_SOCK
           script: |
             echo "$SSH_AUTH_SOCK"
+            ssh-add -l
             cd /opt/test.actions
             git checkout master
             git pull origin master
