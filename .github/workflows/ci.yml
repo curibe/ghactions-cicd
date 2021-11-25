@@ -21,15 +21,34 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup ssh agent
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.KEY }} 
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/ghkey
+          chmod 600 ~/.ssh/ghkey
+          cat << EOF >  ~/.ssh/config
+          Host staging
+            HostName $SSH_HOST
+            IdentityFile ~/.ssh/ghkey
+            User $SSH_USER
+            Port $SSH_PORT
+            ForwardAgent yes
+          EOF
+        env:
+          SSH_KEY: ${{ secrets.KEY }}
+          SSH_USER: ${{ secrets.USERNAME }}
+          SSH_PORT: ${{ secrets.PORT }}
+          SSH_HOST: ${{ secrets.HOST }}
+      # - name: Setup ssh agent
+      #   uses: webfactory/ssh-agent@v0.5.4
+      #   with:
+      #     ssh-private-key: ${{ secrets.KEY }} 
 
       - name: Pulling updates from repo
         env: 
           REPO: /opt/test.actions
         run: |
-          ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
+          ssh staging 'cd /opt/test.actions && git pull origin master'
+        # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
