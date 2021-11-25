@@ -23,12 +23,9 @@ jobs:
       - name: Setup ssh agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        run: |
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${{ secrets.KEY }}"
-        # uses: webfactory/ssh-agent@v0.5.4
-        # with:
-        #   ssh-private-key: ${{ secrets.KEY }} 
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.KEY }} 
 
       - name: Pulling updates from repo
         env: 
