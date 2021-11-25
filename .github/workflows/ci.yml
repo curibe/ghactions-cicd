@@ -22,15 +22,18 @@ jobs:
       - uses: actions/checkout@v2
     
 
-      # - name: Setup ssh agent
-      #   uses: webfactory/ssh-agent@v0.5.4
-      #   with:
-      #     ssh-private-key: ${{ secrets.KEY }}
+      - name: Setup ssh agent
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.KEY }}
 
       - name: Pulling updates from repo
         env: 
           REPO: /opt/test.actions
-        run: ssh -A -i ${{ secrets.KEY}} -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
+        run: |
+          ssh-add -l
+          ls .ssh/
+          ssh -A -i ${{ secrets.KEY}} -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
