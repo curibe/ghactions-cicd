@@ -32,6 +32,7 @@ jobs:
 
       - name: Pulling updates from repo
         env: 
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
           REPO: /opt/test.actions
         run: |
           echo "1. "
