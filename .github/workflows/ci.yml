@@ -29,7 +29,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/ghkey
-          chmod 600 ~/.ssh/ghkey
+          chmod 400 ~/.ssh/ghkey
           cat << EOF >  ~/.ssh/config
           Host staging
             HostName $SSH_HOST
@@ -53,7 +53,7 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          ssh -A staging 'cd /opt/test.actions && ls && ssh -T git@github.com && git remote -v && git pull origin master'
+          ssh -A staging 'cd /opt/test.actions && ls && ssh-add -l && ssh -T git@github.com && git remote -v && git pull origin master'
         # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
