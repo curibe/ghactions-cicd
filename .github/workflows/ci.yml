@@ -37,7 +37,7 @@ jobs:
           chmod 400 ghkey
           ls -la
           cat ghkey
-          echo "ssh -A -i ghkey ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'"
+          ssh -A -i ./ghkey ubuntu@3.21.156.236 'ls -la'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
