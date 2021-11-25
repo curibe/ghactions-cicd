@@ -45,9 +45,10 @@ jobs:
 
       - name: Add know hosts
         run: |
-          ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+          echo "$SSH_HOST""
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          
+
       - name: Pulling updates from repo
         env: 
           REPO: /opt/test.actions
