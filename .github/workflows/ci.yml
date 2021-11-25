@@ -1,4 +1,4 @@
-name: Testing ci with gitgub actions
+name: Testing CD/CD with gitgub actions
 
 on: 
   push:
