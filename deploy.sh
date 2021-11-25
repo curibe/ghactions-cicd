@@ -17,8 +17,16 @@ ls
 echo -e "\n${BLUE}[✔] Stop supervisor ${NC}"
 supervisorctl stop test.actions
 
-echo -e "\n${BLUE}[✔] Pulling updates from the repo ${NC}"
-git pull origin master
+
+echo -e "\n${BLUE}[✔] Stop docker compose ${NC}"
+docker-compose down
+docker-compose down
+
+echo -e "\n${BLUE}[✔] Doing some intermediate steps ${NC}"
+
+echo -e "\n${GREEN}[✔] Start supervisor again ${NC}"
+supervisorctl start test.actions
+
 
 
 

@@ -43,9 +43,6 @@ jobs:
     
       - name: Add know hosts
         run: |
-          printenv
-          cat ~/.ssh/config
-          echo "$SSH_HOST"
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
@@ -53,26 +50,10 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          cat ~/.ssh/config
           eval "$(ssh-agent -s)" && ssh-add ~/.ssh/ghkey
-          ssh-add -l
-          ssh -A staging 'cd /opt/test.actions && ls && ssh-add -l && git remote -v && git pull origin master'
-        # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
-  
-      # - name: deploy
-      #   uses: appleboy/ssh-action@master
-      #   env:
-      #     GITHUB_KEY: ${{ secrets.KEY }}
-      #     CNT: ${{ github.repository }}
-      #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     port: ${{ secrets.PORT }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     script_stop: true
-      #     envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
-      #     script: |
-      #       export GITHUB_KEY="${GITHUB_KEY}"
-      #       cd /opt/test.actions
-      #       ./deploy.sh
+          ssh -A staging 'cd /opt/test.actions && git pull origin master'
+
+      - name: Deploy
+        run: |
+          eval "$(ssh-agent -s)" && ssh-add ~/.ssh/ghkey
+          ssh -A staging 'cd /opt/test.actions && ./deploy.sh'
