@@ -19,12 +19,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: deploy
+            
+      # - name: Setup ssh agent
+      #   uses: appleboy/ssh-action@master
+      #   env:
+      #     GITHUB_KEY: ${{ secrets.KEY }}
+      #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     port: ${{ secrets.PORT }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script_stop: true
+      #     envs: GITHUB_KEY,SSH_AUTH_SOCK
+      #     script: |
+      #       eval $(ssh-agent -s)
+      #       echo "${GITHUB_KEY}" | ssh-add -
+
+      - name: Pulling updates from repo
         uses: appleboy/ssh-action@master
         env:
           GITHUB_KEY: ${{ secrets.KEY }}
-          CNT: ${{ github.repository }}
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         with:
           host: ${{ secrets.HOST }}
@@ -32,9 +47,26 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script_stop: true
-          envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
+          envs: GITHUB_KEY,SSH_AUTH_SOCK
           script: |
-            export GITHUB_KEY="${GITHUB_KEY}"
             cd /opt/test.actions
-            ls
-            ./deploy.sh
+            git checkout master
+            git pull origin master
+
+      # - name: deploy
+      #   uses: appleboy/ssh-action@master
+      #   env:
+      #     GITHUB_KEY: ${{ secrets.KEY }}
+      #     CNT: ${{ github.repository }}
+      #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     port: ${{ secrets.PORT }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script_stop: true
+      #     envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
+      #     script: |
+      #       export GITHUB_KEY="${GITHUB_KEY}"
+      #       cd /opt/test.actions
+      #       ./deploy.sh
