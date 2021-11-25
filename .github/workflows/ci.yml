@@ -29,17 +29,7 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          echo "1. "
-          ssh-add -l
-          echo "2. "
-          pwd
-          echo "${{secrets.KEY}}" > ghkey
-          chmod 400 ghkey
-          ls -la
-          cat ghkey
-          rm ~/.ssh/known_hosts
-          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-          ssh -i ./ghkey -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'ls -la'
+          ssh -A -i ${{secrets.KEY}} -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'ls -la'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
