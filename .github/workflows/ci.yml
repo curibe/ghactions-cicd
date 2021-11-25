@@ -36,4 +36,5 @@ jobs:
           script: |
             export GITHUB_KEY="${GITHUB_KEY}"
             cd /opt/test.actions
+            ls
             ./deploy.sh
