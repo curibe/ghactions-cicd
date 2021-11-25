@@ -20,21 +20,21 @@ jobs:
 
     steps:
             
-      # - name: Setup ssh agent
-      #   uses: appleboy/ssh-action@master
-      #   env:
-      #     GITHUB_KEY: ${{ secrets.KEY }}
-      #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     port: ${{ secrets.PORT }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     script_stop: true
-      #     envs: GITHUB_KEY,SSH_AUTH_SOCK
-      #     script: |
-      #       eval $(ssh-agent -s)
-      #       echo "${GITHUB_KEY}" | ssh-add -
+      - name: Setup ssh agent
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_KEY: ${{ secrets.KEY }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script_stop: true
+          envs: GITHUB_KEY,SSH_AUTH_SOCK
+          script: |
+            eval $(ssh-agent -s)
+            echo "${GITHUB_KEY}" | ssh-add -
 
       - name: Pulling updates from repo
         uses: appleboy/ssh-action@master
