@@ -39,6 +39,7 @@ jobs:
           cat ghkey
           ssh-keygen -R github.com
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh -T git@github.com
           ssh -A -i ./ghkey ubuntu@3.21.156.236 'ls -la'
   
       # - name: deploy
