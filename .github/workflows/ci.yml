@@ -39,8 +39,6 @@ jobs:
           ssh-add -l
           echo "2. "
           pwd
-          ls ~/.ssh/
-          cat ~/.ssh/*
           ssh -A -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
   
       # - name: deploy
