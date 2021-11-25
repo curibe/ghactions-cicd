@@ -49,6 +49,7 @@ jobs:
           script_stop: true
           envs: GITHUB_KEY,SSH_AUTH_SOCK
           script: |
+            echo "$SSH_AUTH_SOCK"
             cd /opt/test.actions
             git checkout master
             git pull origin master
