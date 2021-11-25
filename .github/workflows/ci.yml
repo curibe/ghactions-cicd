@@ -56,7 +56,7 @@ jobs:
           cat ~/.ssh/config
           eval "$(ssh-agent -s)" && ssh-add ~/.ssh/ghkey
           ssh-add -l
-          ssh -A staging 'cd /opt/test.actions && ls && ssh-add -l && ssh -T git@github.com && git remote -v && git pull origin master'
+          ssh -A staging 'cd /opt/test.actions && ls && ssh-add -l && git remote -v && git pull origin master'
         # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
