@@ -19,11 +19,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      
+      - uses: actions/checkout@v2
       - name: Setup ssh agent
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.KEY }} 
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          run: |
+            ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+            ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+        # uses: webfactory/ssh-agent@v0.5.4
+        # with:
+        #   ssh-private-key: ${{ secrets.KEY }} 
 
       - name: Pulling updates from repo
         env: 
