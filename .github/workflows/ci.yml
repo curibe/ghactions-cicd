@@ -34,7 +34,8 @@ jobs:
           echo "1. "
           ssh-add -l
           echo "2. "
-          ls .ssh/
+          pwd
+          ls ~/.ssh/
           ssh -A -i ${{ secrets.KEY}} -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
   
       # - name: deploy
