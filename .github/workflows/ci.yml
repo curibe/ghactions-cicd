@@ -51,7 +51,7 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          ssh -A staging 'cd /opt/test.actions && ls && git pull orgin master'
+          ssh -A staging 'cd /opt/test.actions && ls && git pull origin master'
         # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
