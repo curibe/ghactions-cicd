@@ -5,6 +5,8 @@ on:
     branches:
       - master
       - dev
+  # allow manually running the build from github actions page button
+  workflow_dispatch:
 
 jobs:
   Deploy:
@@ -27,5 +29,6 @@ jobs:
           envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
           script: |
             export GITHUB_KEY="${GITHUB_KEY}"
+            pwd
             ./deploy.sh
             
