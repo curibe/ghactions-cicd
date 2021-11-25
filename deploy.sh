@@ -15,7 +15,7 @@ cd /opt/test.actions
 ls
 
 echo -e "\n${BLUE}[✔] Stop supervisor ${NC}"
-supervisorctl stop test.actions
+sudo supervisorctl stop test.actions
 
 
 echo -e "\n${BLUE}[✔] Stop docker compose ${NC}"
@@ -25,7 +25,7 @@ docker-compose down
 echo -e "\n${BLUE}[✔] Doing some intermediate steps ${NC}"
 
 echo -e "\n${GREEN}[✔] Start supervisor again ${NC}"
-supervisorctl start test.actions
+sudo supervisorctl start test.actions
 
 
 
