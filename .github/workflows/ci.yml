@@ -30,7 +30,7 @@ jobs:
       - name: Pulling updates from repo
         env: 
           REPO: /opt/test.actions
-        run: ssh -A -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'cd ${{ env.REPO }} && git pull origin master'
+        run: ssh -A -i ${{ secrets.KEY}} -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'cd ${{ env.REPO }} && git pull origin master'
 
       # - name: deploy
       #   uses: appleboy/ssh-action@master
