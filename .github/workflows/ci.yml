@@ -36,7 +36,7 @@ jobs:
           echo "2. "
           pwd
           ls ~/.ssh/
-          ssh -A -i ${{ secrets.KEY}} -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
+          ssh -A -p ${{ secrets.PORT }} ${{ secrets.USERNAME }}@${{ secrets.HOST }} 'ls -la'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
