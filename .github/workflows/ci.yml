@@ -21,8 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup ssh agent
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         uses: webfactory/ssh-agent@v0.5.4
         with:
           ssh-private-key: ${{ secrets.KEY }} 
