@@ -29,7 +29,7 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          ssh -A -i ${{secrets.KEY}} -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'ls -la'
+          ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
       #   uses: appleboy/ssh-action@master
