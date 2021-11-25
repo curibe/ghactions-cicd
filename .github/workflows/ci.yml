@@ -23,7 +23,7 @@ jobs:
       - name: Setup ssh agent
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.KEY }}
+          ssh-private-key: ${{ secrets.KEY }} -C "git@github.com:curibe/ghactions-cicd"
 
       - name: Pulling updates from repo
         env: 
