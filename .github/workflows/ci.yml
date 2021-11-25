@@ -14,3 +14,26 @@ jobs:
       - uses: actions/checkout@v2
       - name: Show info
         run: echo "Hello World"
+
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_KEY: ${{ secrets.KEY }}
+          CNT: ${{ github.repository }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script_stop: true
+          envs: GITHUB_KEY,CNT,SSH_AUTH_SOCK
+          script: |
+            export GITHUB_KEY="${GITHUB_KEY}"
+            cd /opt/test.actions
+            ./deploy.sh
