@@ -38,11 +38,7 @@ jobs:
             Port $SSH_PORT
             ForwardAgent yes
           EOF
-      # - name: Setup ssh agent
-      #   uses: webfactory/ssh-agent@v0.5.4
-      #   with:
-      #     ssh-private-key: ${{ secrets.KEY }} 
-
+    
       - name: Add know hosts
         run: |
           printenv
@@ -55,7 +51,7 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          ssh staging 'cd /opt/test.actions && git pull origin master'
+          ssh staging 'cd /opt/test.actions && ls'
         # ssh -A -o StrictHostKeyChecking=no ubuntu@3.21.156.236 'cd /opt/test.actions && git pull origin master'
   
       # - name: deploy
