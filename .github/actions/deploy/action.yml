@@ -45,6 +45,7 @@ runs:
         EOF
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
         ssh-add - <<< "${SSH_KEY}"
+      shell: bash
       env:
         SSH_PORT: ${{ inputs.ssh_port }}
         SSH_HOST: ${{ inputs.ssh_host }}
@@ -72,5 +73,6 @@ runs:
     - name: Deploy
       run: |
         ssh staging 'cd "${REPO_PATH}" && ./"${SCRIPT_NAME}"'
+      shell: bash
       env:
         SCRIP_NAME: ${{ inputs.script_name }}
