@@ -52,4 +52,5 @@ jobs:
 
       - name: Deploy
         run: |
+          ssh-add -L
           ssh staging 'cd /opt/test.actions && ./deploy.sh'
