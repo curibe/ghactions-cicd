@@ -64,7 +64,7 @@ runs:
 
     - name: Pulling updates from repo
       run: |
-        ssh staging 'cd "${REPO_PATH}" && git switch "${MAIN_BRANCH}" && git pull origin "${MAIN_BRANCH}"'
+        ssh staging "cd ${REPO_PATH} && git switch ${MAIN_BRANCH} && git pull origin ${MAIN_BRANCH}"
       shell: bash
       env:
         REPO_PATH: ${{ inputs.repo_path }}
@@ -73,7 +73,7 @@ runs:
 
     - name: Deploy
       run: |
-        ssh staging 'cd "${REPO_PATH}" && ./"${SCRIPT_NAME}"'
+        ssh staging "cd ${REPO_PATH} && ./${SCRIPT_NAME}"
       shell: bash
       env:
         SCRIPT_NAME: ${{ inputs.script_name }}
