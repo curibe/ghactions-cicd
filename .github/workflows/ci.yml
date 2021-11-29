@@ -22,10 +22,12 @@ jobs:
 
   Deploy:
     runs-on: ubuntu-latest
+    env:
+      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup ssh config
+      - name: Setup ssh config and ssh-agent
         run: |
           mkdir -p ~/.ssh/
           cat << EOF >  ~/.ssh/config
@@ -36,6 +38,8 @@ jobs:
             ForwardAgent yes
             StrictHostKeyChecking no
           EOF
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${SSH_KEY}"
     
       - name: Add know hosts
         run: |
@@ -46,8 +50,6 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${SSH_KEY}"
           echo $SSH_AUTH_SOCK
           ls /tmp/ssh-*
           ssh staging 'cd /opt/test.actions && git pull origin master'
