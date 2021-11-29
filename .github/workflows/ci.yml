@@ -25,19 +25,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup ssh agent
+      - name: Setup ssh config
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/ghkey
-          chmod 400 ~/.ssh/ghkey
           cat << EOF >  ~/.ssh/config
           Host staging
             HostName $SSH_HOST
-            IdentityFile ~/.ssh/ghkey
             User $SSH_USER
             Port $SSH_PORT
             ForwardAgent yes
-            AddKeysToAgent yes
             StrictHostKeyChecking no
           EOF
     
@@ -50,10 +46,10 @@ jobs:
         env: 
           REPO: /opt/test.actions
         run: |
-          eval "$(ssh-agent -s)" && ssh-add ~/.ssh/ghkey
-          ssh -A staging 'cd /opt/test.actions && git pull origin master'
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${SSH_KEY}"
+          ssh staging 'cd /opt/test.actions && git pull origin master'
 
       - name: Deploy
         run: |
-          eval "$(ssh-agent -s)" && ssh-add ~/.ssh/ghkey
-          ssh -A staging 'cd /opt/test.actions && ./deploy.sh'
+          ssh staging 'cd /opt/test.actions && ./deploy.sh'
