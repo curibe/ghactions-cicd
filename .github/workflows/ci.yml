@@ -52,5 +52,5 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh-add -L
+          echo $SSH_AUTH_SOCK
           ssh staging 'cd /opt/test.actions && ./deploy.sh'
