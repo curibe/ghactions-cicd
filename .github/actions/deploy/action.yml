@@ -69,10 +69,12 @@ runs:
       env:
         REPO_PATH: ${{ inputs.repo_path }}
         MAIN_BRANCH: ${{ inputs.main_branch }}
+        SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
 
     - name: Deploy
       run: |
         ssh staging 'cd "${REPO_PATH}" && ./"${SCRIPT_NAME}"'
       shell: bash
       env:
-        SCRIP_NAME: ${{ inputs.script_name }}
+        SCRIPT_NAME: ${{ inputs.script_name }}
+        SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
