@@ -48,6 +48,8 @@ jobs:
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${SSH_KEY}"
+          echo $SSH_AUTH_SOCK
+          ls /tmp/ssh-*
           ssh staging 'cd /opt/test.actions && git pull origin master'
 
       - name: Deploy
