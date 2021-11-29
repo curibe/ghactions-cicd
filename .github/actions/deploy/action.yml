@@ -73,8 +73,10 @@ runs:
 
     - name: Deploy
       run: |
+        echo "showing var: ${TEST_ENV}"
         ssh staging "cd ${REPO_PATH} && ./${SCRIPT_NAME}"
       shell: bash
       env:
+        REPO_PATH: ${{ inputs.repo_path }}
         SCRIPT_NAME: ${{ inputs.script_name }}
         SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}

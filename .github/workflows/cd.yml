@@ -21,4 +21,6 @@ jobs:
           ssh_host: ${{ secrets.HOST }}
           repo_path: '/opt/test.actions'
           script_name: 'deploy.sh'
+        env:
+          TEST_ENV: 'dev-dev'
     
