@@ -31,6 +31,8 @@ inputs:
 
 runs:
   using: "composite"
+  env:
+    SOME_VAR: "hihihi"
   steps:
     - name: Setup ssh config and ssh-agent
       run: |
