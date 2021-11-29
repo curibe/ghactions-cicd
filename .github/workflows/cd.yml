@@ -1,4 +1,4 @@
-name: Testing CD/CD with gitgub actions
+name: Deploy on dev server
 
 on: 
   push:
@@ -11,14 +11,7 @@ env:
   SSH_HOST: ${{ secrets.HOST }}
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Show info
-        run: echo "Hello World"
-
+  
   Deploy:
     runs-on: ubuntu-latest
     env:
