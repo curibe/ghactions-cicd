@@ -4,49 +4,19 @@ on:
   push:
     branches:
       - dev
-env:
-  SSH_KEY: ${{ secrets.KEY }}
-  SSH_USER: ${{ secrets.USERNAME }}
-  SSH_PORT: ${{ secrets.PORT }}
-  SSH_HOST: ${{ secrets.HOST }}
 
 jobs:
   
   Deploy:
     runs-on: ubuntu-latest
-    env:
-      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-
+    name: update server and deploy
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup ssh config and ssh-agent
-        run: |
-          mkdir -p ~/.ssh/
-          cat << EOF >  ~/.ssh/config
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            Port $SSH_PORT
-            ForwardAgent yes
-            StrictHostKeyChecking no
-          EOF
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${SSH_KEY}"
+      - id: deploy action
+        uses: ./.github/actions/deploy/
+        with:
+          ssh_key: ${{ secrets.KEY }}
+          ssh_user: ${{ secrets.USERNAME }}
+          ssh_port: ${{ secrets.PORT }}
+          ssh_host: ${{ secrets.HOST }}
+          repo_path: '/opt/test.actions'
     
-      - name: Add know hosts
-        run: |
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Pulling updates from repo
-        env: 
-          REPO: /opt/test.actions
-        run: |
-          echo $SSH_AUTH_SOCK
-          ls /tmp/ssh*
-          ssh staging 'cd /opt/test.actions && git switch dev && git pull origin dev'
-
-      - name: Deploy
-        run: |
-          ls /tmp/ssh*
-          ssh staging 'cd /opt/test.actions && ./deploy.sh'
