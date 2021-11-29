@@ -51,10 +51,10 @@ jobs:
           REPO: /opt/test.actions
         run: |
           echo $SSH_AUTH_SOCK
-          ls /tmp/ssh-*
+          ls /tmp/ssh*
           ssh staging 'cd /opt/test.actions && git pull origin master'
 
       - name: Deploy
         run: |
-          ls /tmp/ssh-*
+          ls /tmp/ssh*
           ssh staging 'cd /opt/test.actions && ./deploy.sh'
