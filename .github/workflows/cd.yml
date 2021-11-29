@@ -51,7 +51,7 @@ jobs:
         run: |
           echo $SSH_AUTH_SOCK
           ls /tmp/ssh*
-          ssh staging 'cd /opt/test.actions && git pull origin master'
+          ssh staging 'cd /opt/test.actions && git switch dev && git pull origin dev'
 
       - name: Deploy
         run: |
