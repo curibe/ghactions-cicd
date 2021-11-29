@@ -1,15 +1,13 @@
 name: Testing CD/CD with gitgub actions
 
 on: 
-  push:
+  pull_request:
     branches:
       - master
       - dev
-env:
-  SSH_KEY: ${{ secrets.KEY }}
-  SSH_USER: ${{ secrets.USERNAME }}
-  SSH_PORT: ${{ secrets.PORT }}
-  SSH_HOST: ${{ secrets.HOST }}
+  push:
+    branches:
+      - dev
 
 jobs:
   Build:
@@ -20,41 +18,3 @@ jobs:
       - name: Show info
         run: echo "Hello World"
 
-  Deploy:
-    runs-on: ubuntu-latest
-    env:
-      SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup ssh config and ssh-agent
-        run: |
-          mkdir -p ~/.ssh/
-          cat << EOF >  ~/.ssh/config
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            Port $SSH_PORT
-            ForwardAgent yes
-            StrictHostKeyChecking no
-          EOF
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${SSH_KEY}"
-    
-      - name: Add know hosts
-        run: |
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Pulling updates from repo
-        env: 
-          REPO: /opt/test.actions
-        run: |
-          echo $SSH_AUTH_SOCK
-          ls /tmp/ssh*
-          ssh staging 'cd /opt/test.actions && git pull origin master'
-
-      - name: Deploy
-        run: |
-          ls /tmp/ssh*
-          ssh staging 'cd /opt/test.actions && ./deploy.sh'
