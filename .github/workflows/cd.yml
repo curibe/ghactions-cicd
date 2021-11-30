@@ -21,5 +21,6 @@ jobs:
           ssh_port: ${{ secrets.PORT }}
           ssh_host: ${{ secrets.HOST }}
           repo_path: '/opt/test.actions'
-          script_name: 'deploy.sh'
+          supervisor_process_name: 'test.actions'
+          script_name: './bin/deploy.sh'
     
