@@ -37,50 +37,42 @@ runs:
         mkdir -p ~/.ssh/
         cat << EOF >  ~/.ssh/config
         Host staging
-          HostName $SSH_HOST
-          User $SSH_USER
-          Port $SSH_PORT
+          HostName ${{ inputs.ssh_host }}
+          User ${{ inputs.ssh_user }}
+          Port ${{ inputs.ssh_port }}
           ForwardAgent yes
           StrictHostKeyChecking no
         EOF
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-add - <<< "${SSH_KEY}"
+        ssh-add - <<< " ${{ inputs.ssh_key }}"
       shell: bash
       env:
-        SSH_PORT: ${{ inputs.ssh_port }}
-        SSH_HOST: ${{ inputs.ssh_host }}
-        SSH_USER: ${{ inputs.ssh_user }}
-        SSH_KEY: ${{ inputs.ssh_key }}
         SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
 
   
     - name: Add know hosts
       run: |
-        ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+        ssh-keyscan -H "${{ inputs.ssh_host }}" >> ~/.ssh/known_hosts
         ssh-keyscan github.com >> ~/.ssh/known_hosts
       shell: bash
-      env:
-        SSH_HOST: ${{ inputs.ssh_host }}
 
     - name: Pulling updates from repo
       run: |
         ssh staging "
-        cd ${REPO_PATH}
-        git switch ${MAIN_BRANCH}
-        git pull origin ${MAIN_BRANCH}
+        cd ${{ inputs.repo_path }}
+        git switch ${{ inputs.main_branch }}
+        git pull origin ${{ inputs.main_branch }}
         "
       shell: bash
       env:
-        REPO_PATH: ${{ inputs.repo_path }}
-        MAIN_BRANCH: ${{ inputs.main_branch }}
         SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
 
     - name: Deploy
       run: |
-        echo "showing var: ${TEST_ENV}"
-        ssh staging "cd ${REPO_PATH} && ./${SCRIPT_NAME}"
+        ssh staging "
+        cd {{ inputs.repo_path }}
+        ./${{ inputs.script_name }}
+        "
       shell: bash
       env:
-        REPO_PATH: ${{ inputs.repo_path }}
-        SCRIPT_NAME: ${{ inputs.script_name }}
         SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
