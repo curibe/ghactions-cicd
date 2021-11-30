@@ -44,7 +44,7 @@ runs:
           StrictHostKeyChecking no
         EOF
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-add - <<< " ${{ inputs.ssh_key }}"
+        ssh-add - <<< "${{ inputs.ssh_key }}"
       shell: bash
       env:
         SSH_AUTH_SOCK: ${{ inputs.ssh_agent_sock }}
