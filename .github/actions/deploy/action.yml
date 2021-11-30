@@ -70,7 +70,7 @@ runs:
     - name: Deploy
       run: |
         ssh staging "
-        cd {{ inputs.repo_path }}
+        cd ${{ inputs.repo_path }}
         ./${{ inputs.script_name }}
         "
       shell: bash
