@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: deploy-action
+        name: Deploy action
         uses: ./.github/actions/deploy/
         with:
           ssh_key: ${{ secrets.KEY }}
