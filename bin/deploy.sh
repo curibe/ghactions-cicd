@@ -10,13 +10,8 @@ PURPLE='\e[35m'
 NC='\e[0m' # No Color
 
 
-echo -e "\n${BLUE}[✔] Moving to folder's project ${NC}"
-cd /opt/test.actions
-ls
-
 echo -e "\n${BLUE}[✔] Stop supervisor ${NC}"
-sudo supervisorctl stop test.actions
-
+sudo supervisorctl stop $PROCESS_NAME
 
 echo -e "\n${BLUE}[✔] Stop docker compose ${NC}"
 docker-compose down
@@ -25,7 +20,7 @@ docker-compose down
 echo -e "\n${BLUE}[✔] Doing some intermediate steps ${NC}"
 
 echo -e "\n${GREEN}[✔] Start supervisor again ${NC}"
-sudo supervisorctl start test.actions
+sudo supervisorctl start $PROCESS_NAME
 
 
 
